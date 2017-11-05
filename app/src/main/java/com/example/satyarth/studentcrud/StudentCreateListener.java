@@ -3,6 +3,7 @@ package com.example.satyarth.studentcrud;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -46,7 +47,7 @@ public class StudentCreateListener implements View.OnClickListener {
                 StudentModel studentObject = new StudentModel();
                 studentObject.name = name;
                 studentObject.email = email;
-                studentObject.age = (int) Integer.parseInt(age);
+                studentObject.age = (int) (!age.isEmpty() ? Integer.parseInt(age) : 0);
                 studentObject.address = address;
 
                 boolean createSuccess = new StudentTableController(context).create(studentObject);

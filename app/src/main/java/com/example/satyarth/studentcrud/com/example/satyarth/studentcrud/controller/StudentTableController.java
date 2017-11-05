@@ -77,23 +77,9 @@ public class StudentTableController extends DatabaseHandler {
                 sortOrder                                 // The sort order
         );
 
-        List<StudentModel> recordList = new ArrayList<StudentModel>();
-        if (cursor.moveToFirst()) {
-            do {
+        List<StudentModel> recordList = getRecordsFromCursor(cursor);
 
-                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(StudentDBContract.StudentEntry._ID)));
-                String studentName = cursor.getString(cursor.getColumnIndex(StudentDBContract.StudentEntry.COLUMN_NAME_NAME));
-                String studentEmail = cursor.getString(cursor.getColumnIndex(StudentDBContract.StudentEntry.COLUMN_NAME_EMAIL));
 
-                StudentModel objectStudent = new StudentModel();
-                objectStudent.id = id;
-                objectStudent.name = studentName;
-                objectStudent.email = studentEmail;
-
-                recordList.add(objectStudent);
-
-            } while (cursor.moveToNext());
-        }
         cursor.close();
         db.close();
 
@@ -175,5 +161,69 @@ public class StudentTableController extends DatabaseHandler {
         return deleteSuccessful;
 
     }
+
+    public List<StudentModel> searchByName(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                StudentDBContract.StudentEntry._ID,
+                StudentDBContract.StudentEntry.COLUMN_NAME_NAME,
+                StudentDBContract.StudentEntry.COLUMN_NAME_EMAIL
+        };
+
+        String selection = StudentDBContract.StudentEntry.COLUMN_NAME_NAME + " LIKE ?";
+        String[] selectionArgs = {name +"%"};
+
+
+// How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                StudentDBContract.StudentEntry.COLUMN_NAME_NAME + " ASC";
+
+        Cursor cursor = db.query(
+                StudentDBContract.StudentEntry.TABLE_NAME,                     // The table to query
+                null,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                 // The sort order
+        );
+
+        List<StudentModel> recordList = getRecordsFromCursor(cursor);
+
+
+        cursor.close();
+        db.close();
+
+        return recordList;
+    }
+
+
+    public List<StudentModel> getRecordsFromCursor(Cursor cursor){
+        List<StudentModel> recordList = new ArrayList<StudentModel>();
+        if (cursor.moveToFirst()) {
+            do {
+
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(StudentDBContract.StudentEntry._ID)));
+                String studentName = cursor.getString(cursor.getColumnIndex(StudentDBContract.StudentEntry.COLUMN_NAME_NAME));
+                String studentEmail = cursor.getString(cursor.getColumnIndex(StudentDBContract.StudentEntry.COLUMN_NAME_EMAIL));
+
+                StudentModel objectStudent = new StudentModel();
+                objectStudent.id = id;
+                objectStudent.name = studentName;
+                objectStudent.email = studentEmail;
+
+                recordList.add(objectStudent);
+
+            } while (cursor.moveToNext());
+        }
+        return recordList;
+    }
+
+
+
+
 
 }

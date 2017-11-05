@@ -3,6 +3,9 @@ package com.example.satyarth.studentcrud;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +19,7 @@ import static android.graphics.Color.WHITE;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
+    private EditText searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +27,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         addButton = (FloatingActionButton) findViewById(R.id.add);
+        searchBar = (EditText) findViewById(R.id.searchBar);
 
         addButton.setOnClickListener(new StudentCreateListener());
 
         countRecords();
         readRecords();
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                List<StudentModel> students = new StudentTableController(MainActivity.this).searchByName(searchBar.getText().toString());
+                LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearRecords);
+                updateListView(linearLayoutRecords, students);
+
+                int noOfRecords = students.size();
+
+                TextView textViewRecordCount = (TextView) findViewById(R.id.textViewRecordCount);
+                textViewRecordCount.setText(noOfRecords + " records found.");
+
+            }
+        });
 
 
     }
@@ -40,10 +70,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void readRecords() {
-        LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearRecords);
-        linearLayoutRecords.removeAllViews();
+
         List<StudentModel> students = new StudentTableController(this).read();
 
+        LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearRecords);
+
+        updateListView(linearLayoutRecords, students);
+
+
+
+    }
+
+    public void updateListView(LinearLayout linearLayoutRecords, List<StudentModel> students){
+        linearLayoutRecords.removeAllViews();
         if (students.size() > 0) {
 
             for (StudentModel obj : students) {
@@ -83,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
             linearLayoutRecords.addView(locationItem);
         }
+
 
     }
 }

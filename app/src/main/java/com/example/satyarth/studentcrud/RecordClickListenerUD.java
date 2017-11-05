@@ -111,7 +111,7 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
                                 studentObject.id = objectStudent.id;
                                 studentObject.name = name;
                                 studentObject.email = email;
-                                studentObject.age = (int) Integer.parseInt(age);
+                                studentObject.age = (int) (!age.isEmpty() ? Integer.parseInt(age) : 0);
                                 studentObject.address = address;
 
                                 Toast.makeText(context, name + " " + email + " " + age + " " + address, Toast.LENGTH_SHORT).show();
