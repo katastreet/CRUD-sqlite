@@ -1,4 +1,4 @@
-package com.example.satyarth.studentcrud;
+package com.example.satyarth.studentcrud.Common;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.satyarth.studentcrud.MainActivity.MainActivity;
+import com.example.satyarth.studentcrud.R;
 import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
 import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
 
