@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.controller.StudentTableController;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.StudentModel;
+import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
+import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
 
 import java.util.List;
 
@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         addButton = (FloatingActionButton) findViewById(R.id.add);
         searchBar = (EditText) findViewById(R.id.searchBar);
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                List<StudentModel> students = new StudentTableController(MainActivity.this).searchByName(searchBar.getText().toString());
+                List<Student> students = new DaoServiceStudent().searchByName(searchBar.getText().toString());
                 LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearRecords);
                 updateListView(linearLayoutRecords, students);
 
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void countRecords() {
-        int noOfRecords = new StudentTableController(this).getCount();
+        int noOfRecords = new DaoServiceStudent().getCount();
 
         TextView textViewRecordCount = (TextView) findViewById(R.id.textViewRecordCount);
         textViewRecordCount.setText(noOfRecords + " records found.");
@@ -71,25 +73,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void readRecords() {
 
-        List<StudentModel> students = new StudentTableController(this).read();
+        List<Student> students = new DaoServiceStudent().read();
 
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearRecords);
 
         updateListView(linearLayoutRecords, students);
 
-
-
     }
 
-    public void updateListView(LinearLayout linearLayoutRecords, List<StudentModel> students){
+    public void updateListView(LinearLayout linearLayoutRecords, List<Student> students){
         linearLayoutRecords.removeAllViews();
         if (students.size() > 0) {
 
-            for (StudentModel obj : students) {
+            for (Student obj : students) {
 
-                int id = obj.id;
-                String studentName = obj.name;
-                String studentEmail = obj.email;
+                long id = obj.getId();
+                String studentName = obj.getName();
+                String studentEmail = obj.getEmail();
 
                 String textViewContents = studentName + "\n" + studentEmail;
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 textViewStudentItem.setTextColor(WHITE);
                 textViewStudentItem.setTextSize(18);
                 textViewStudentItem.setText(textViewContents);
-                textViewStudentItem.setTag(Integer.toString(id));
+                textViewStudentItem.setTag(Long.toString(id));
                 textViewStudentItem.setOnLongClickListener(new RecordClickListenerUD());
 
 

@@ -3,14 +3,14 @@ package com.example.satyarth.studentcrud;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.controller.StudentTableController;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.StudentModel;
+
+import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
+import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
 
 /**
  * Created by satyarth on 05/11/17.
@@ -44,13 +44,13 @@ public class StudentCreateListener implements View.OnClickListener {
 
                 Toast.makeText(context, name + " " + email + " " + age + " " + address, Toast.LENGTH_SHORT).show();
 
-                StudentModel studentObject = new StudentModel();
-                studentObject.name = name;
-                studentObject.email = email;
-                studentObject.age = (int) (!age.isEmpty() ? Integer.parseInt(age) : 0);
-                studentObject.address = address;
+                Student studentObject = new Student();
+                studentObject.setName(name);
+                studentObject.setEmail(email);
+                studentObject.setAge((int) (!age.isEmpty() ? Integer.parseInt(age) : 0));
+                studentObject.setAddress(address);
 
-                boolean createSuccess = new StudentTableController(context).create(studentObject);
+                boolean createSuccess = new DaoServiceStudent().create(studentObject);
 
                 if(createSuccess){
                     Toast.makeText(context, "Student information was saved.", Toast.LENGTH_SHORT).show();

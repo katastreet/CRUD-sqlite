@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.controller.StudentTableController;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.StudentModel;
+import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
+import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
 
 /**
  * Created by satyarth on 05/11/17.
@@ -35,13 +35,13 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
                         //view
 
                         if(item == 0){
-                            viewRecord(Integer.parseInt(id));
+                            viewRecord(Long.parseLong(id));
                         }
                         else if(item == 1){
-                            editRecord(Integer.parseInt(id));
+                            editRecord(Long.parseLong(id));
                         }
                         else if (item == 2){
-                            deleteRecord(Integer.parseInt(id));
+                            deleteRecord(Long.parseLong(id));
                         }
 
                     }
@@ -49,9 +49,8 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
         return false;
     }
 
-    public void viewRecord(int studentId){
-        final StudentTableController studentTableController = new StudentTableController(context);
-        StudentModel objectStudent = studentTableController.readSingleRecord(studentId);
+    public void viewRecord(long studentId){
+        Student objectStudent = new DaoServiceStudent().readSingleRecord(studentId);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.student_display_form, null, false);
@@ -61,14 +60,14 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
         final TextView Age = (TextView) formElementsView.findViewById(R.id.editTextAge);
         final TextView Address = (TextView) formElementsView.findViewById(R.id.editTextAddress);
 
-        Name.setText("Name: " + objectStudent.name);
-        Email.setText("Email: "+ objectStudent.email);
-        Age.setText("Age: " + Integer.toString(objectStudent.age));
-        Address.setText("Address: " + objectStudent.address);
+        Name.setText("Name: " + objectStudent.getName());
+        Email.setText("Email: "+ objectStudent.getEmail());
+        Age.setText("Age: " + Integer.toString(objectStudent.getAge()));
+        Address.setText("Address: " + objectStudent.getAddress());
 
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
-                .setTitle("Student Record Id:" + objectStudent.id)
+                .setTitle("Student Record Id:" + objectStudent.getId())
                 .setPositiveButton("Exit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -79,9 +78,8 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
                         }).show();
 
     }
-    public void editRecord(int studentId){
-        final StudentTableController studentTableController = new StudentTableController(context);
-        final StudentModel objectStudent = studentTableController.readSingleRecord(studentId);
+    public void editRecord(long studentId){
+        final Student objectStudent = new DaoServiceStudent().readSingleRecord(studentId);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.student_input_form, null, false);
@@ -91,14 +89,14 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
         final EditText editTextAge = (EditText) formElementsView.findViewById(R.id.editTextAge);
         final EditText editTextAddress = (EditText) formElementsView.findViewById(R.id.editTextAddress);
 
-        editTextName.setText(objectStudent.name);
-        editTextEmail.setText(objectStudent.email);
-        editTextAge.setText(Integer.toString(objectStudent.age));
-        editTextAddress.setText(objectStudent.address);
+        editTextName.setText(objectStudent.getName());
+        editTextEmail.setText(objectStudent.getEmail());
+        editTextAge.setText(Integer.toString(objectStudent.getAge()));
+        editTextAddress.setText(objectStudent.getAddress());
 
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
-                .setTitle("Edit Record Id:" + objectStudent.id)
+                .setTitle("Edit Record Id:" + objectStudent.getId())
                 .setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -107,16 +105,16 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
                                 String age = editTextAge.getText().toString();
                                 String address = editTextAddress.getText().toString();
 
-                                StudentModel studentObject = new StudentModel();
-                                studentObject.id = objectStudent.id;
-                                studentObject.name = name;
-                                studentObject.email = email;
-                                studentObject.age = (int) (!age.isEmpty() ? Integer.parseInt(age) : 0);
-                                studentObject.address = address;
+                                Student studentObject = new Student();
+                                studentObject.setId(objectStudent.getId());
+                                studentObject.setName(name);
+                                studentObject.setEmail(email);
+                                studentObject.setAge((int) (!age.isEmpty() ? Integer.parseInt(age) : 0));
+                                studentObject.setAddress(address);
 
                                 Toast.makeText(context, name + " " + email + " " + age + " " + address, Toast.LENGTH_SHORT).show();
 
-                                boolean updateSuccessful = studentTableController.update(studentObject);
+                                boolean updateSuccessful = new DaoServiceStudent().update(studentObject);
 
                                 if(updateSuccessful){
                                     Toast.makeText(context, "Student record was updated.", Toast.LENGTH_SHORT).show();
@@ -133,9 +131,8 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
 
     }
 
-    public void deleteRecord(int studentId){
-        boolean deleteSuccessful = new StudentTableController(context).delete(Integer.parseInt(id));
-
+    public void deleteRecord(long studentId){
+        boolean deleteSuccessful = new DaoServiceStudent().delete(studentId);
         if (deleteSuccessful){
             Toast.makeText(context, "Student record was deleted.", Toast.LENGTH_SHORT).show();
         }else{
