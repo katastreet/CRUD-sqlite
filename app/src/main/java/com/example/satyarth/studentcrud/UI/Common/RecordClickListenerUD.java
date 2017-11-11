@@ -1,18 +1,23 @@
-package com.example.satyarth.studentcrud.Common;
+package com.example.satyarth.studentcrud.UI.Common;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.satyarth.studentcrud.MainActivity.MainActivity;
+import com.example.satyarth.studentcrud.UI.Main.MainActivity;
 import com.example.satyarth.studentcrud.R;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
+import com.example.satyarth.studentcrud.model.Student;
+import com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Optional;
 
 /**
  * Created by satyarth on 05/11/17.
@@ -23,10 +28,30 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
     Context context;
     String id;
 
+    // binding the data display form
+    @Nullable @BindView(R.id.textViewName) TextView Name;
+    @Nullable @BindView(R.id.textViewEmail) TextView Email;
+    @Nullable @BindView(R.id.textViewAge) TextView Age;
+
+    @Nullable @BindView(R.id.textViewAddress) TextView Address;
+
+    //binding data input form
+    @Nullable @BindView(R.id.editTextName) EditText editTextName;
+    @Nullable @BindView(R.id.editTextEmail) EditText editTextEmail;
+    @Nullable @BindView(R.id.editTextAge) EditText editTextAge;
+    @Nullable @BindView(R.id.editTextAddress) EditText editTextAddress;
+
+
+
     @Override
     public boolean onLongClick(View view) {
         context = view.getContext();
         id = view.getTag().toString();
+
+
+
+
+
 
         final CharSequence[] items = { "View", "Edit", "Delete" };
 
@@ -57,10 +82,9 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.student_display_form, null, false);
 
-        final TextView Name = (TextView) formElementsView.findViewById(R.id.editTextName);
-        final TextView Email = (TextView) formElementsView.findViewById(R.id.editTextEmail);
-        final TextView Age = (TextView) formElementsView.findViewById(R.id.editTextAge);
-        final TextView Address = (TextView) formElementsView.findViewById(R.id.editTextAddress);
+        //this can be used with any thing or objects
+        ButterKnife.bind(this, formElementsView);
+
 
         Name.setText("Name: " + objectStudent.getName());
         Email.setText("Email: "+ objectStudent.getEmail());
@@ -86,10 +110,8 @@ public class RecordClickListenerUD implements View.OnLongClickListener {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.student_input_form, null, false);
 
-        final EditText editTextName = (EditText) formElementsView.findViewById(R.id.editTextName);
-        final EditText editTextEmail = (EditText) formElementsView.findViewById(R.id.editTextEmail);
-        final EditText editTextAge = (EditText) formElementsView.findViewById(R.id.editTextAge);
-        final EditText editTextAddress = (EditText) formElementsView.findViewById(R.id.editTextAddress);
+        ButterKnife.bind(this, formElementsView);
+
 
         editTextName.setText(objectStudent.getName());
         editTextEmail.setText(objectStudent.getEmail());

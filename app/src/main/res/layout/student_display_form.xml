@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/editTextName"
+        android:id="@+id/textViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -14,27 +14,27 @@
     </TextView>
 
     <TextView
-        android:id="@+id/editTextEmail"
+        android:id="@+id/textViewEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/editTextName"
+        android:layout_below="@id/textViewName"
         android:hint="Student Email"
         android:maxLines="1" />
     <TextView
-        android:id="@+id/editTextAge"
+        android:id="@+id/textViewAge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/editTextEmail"
+        android:layout_below="@id/textViewEmail"
         android:hint="Student Age"
         android:maxLines="1" />
     <TextView
-        android:id="@+id/editTextAddress"
+        android:id="@+id/textViewAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/editTextAge"
+        android:layout_below="@id/textViewAge"
         android:hint="Student Address"
         android:maxLines="1" />
 

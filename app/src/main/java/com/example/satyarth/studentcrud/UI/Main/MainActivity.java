@@ -1,20 +1,19 @@
-package com.example.satyarth.studentcrud.MainActivity;
+package com.example.satyarth.studentcrud.UI.Main;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.satyarth.studentcrud.R;
-import com.example.satyarth.studentcrud.Common.RecordClickListenerUD;
-import com.example.satyarth.studentcrud.Common.StudentCreateListener;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
+import com.example.satyarth.studentcrud.UI.Common.RecordClickListenerUD;
+import com.example.satyarth.studentcrud.UI.Common.StudentCreateListener;
+import com.example.satyarth.studentcrud.model.Student;
+import com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
 
 import java.util.List;
 
@@ -23,7 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-import static android.R.attr.editable;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 

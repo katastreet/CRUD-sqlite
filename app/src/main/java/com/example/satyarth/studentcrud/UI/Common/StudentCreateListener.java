@@ -1,26 +1,32 @@
-package com.example.satyarth.studentcrud.Common;
+package com.example.satyarth.studentcrud.UI.Common;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.example.satyarth.studentcrud.MainActivity.MainActivity;
+import com.example.satyarth.studentcrud.UI.Main.MainActivity;
 import com.example.satyarth.studentcrud.R;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
+import com.example.satyarth.studentcrud.model.Student;
+import com.example.satyarth.studentcrud.services.repository.DaoServiceStudent;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by satyarth on 05/11/17.
  */
 
 public class StudentCreateListener{
+    @BindView(R.id.editTextName) EditText editTextName;
+    @BindView(R.id.editTextEmail) EditText editTextEmail;
+    @BindView(R.id.editTextAge) EditText editTextAge;
+    @BindView(R.id.editTextAddress) EditText editTextAddress;
 
     public void onClick(View view) {
         final Context context = view.getContext();
@@ -29,10 +35,7 @@ public class StudentCreateListener{
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.student_input_form, null, false);
 
-        final EditText editTextName = (EditText) formElementsView.findViewById(R.id.editTextName);
-        final EditText editTextEmail = (EditText) formElementsView.findViewById(R.id.editTextEmail);
-        final EditText editTextAge = (EditText) formElementsView.findViewById(R.id.editTextAge);
-        final EditText editTextAddress = (EditText) formElementsView.findViewById(R.id.editTextAddress);
+        ButterKnife.bind(this, formElementsView);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setView(formElementsView);

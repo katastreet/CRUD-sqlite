@@ -3,8 +3,8 @@ package com.example.satyarth.studentcrud;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.DaoMaster;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.DaoSession;
+import com.example.satyarth.studentcrud.model.DaoMaster;
+import com.example.satyarth.studentcrud.model.DaoSession;
 
 import org.greenrobot.greendao.database.Database;
 

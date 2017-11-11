@@ -1,4 +1,4 @@
-package com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model;
+package com.example.satyarth.studentcrud.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

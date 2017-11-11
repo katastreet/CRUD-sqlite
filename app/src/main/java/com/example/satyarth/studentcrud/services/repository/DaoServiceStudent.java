@@ -1,13 +1,11 @@
-package com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.services.repository;
+package com.example.satyarth.studentcrud.services.repository;
 
 import com.example.satyarth.studentcrud.CRUDapp;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.DaoSession;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.Student;
-import com.example.satyarth.studentcrud.com.example.satyarth.studentcrud.model.StudentDao;
+import com.example.satyarth.studentcrud.model.DaoSession;
+import com.example.satyarth.studentcrud.model.Student;
+import com.example.satyarth.studentcrud.model.StudentDao;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by satyarth on 08/11/17.
